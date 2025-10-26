@@ -1,53 +1,152 @@
-:root {
+.light-mode {
+  --bg: #ffffff;
+  --card: #f0f0f0;
+  --accent: #2a2a2a;
+  --text: #000000;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --button-bg: #f0f0f0;
+}
+
+.dark-mode {
   --bg: #0f1724;
   --card: #0b1220;
   --accent: #60a5fa;
-  --text: #e6eef8;
+  --text: #ffffff;
+  --shadow: rgba(2, 6, 23, 0.6);
+  --button-bg: #1a2535;
 }
+
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
+
 html,
 body,
 #root {
   height: 100%;
+  width: 100%;
 }
+
 body {
   margin: 0;
   font-family: Inter, Segoe UI, Roboto, Arial;
   background: var(--bg);
   color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.app-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+  background: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Keep the header fixed near the top so it's always visible and positioned
+   next to the clock title. Add top padding to the container so the clock
+   doesn't sit behind the header. */
+.app-container {
+  padding-top: 100px; /* space for fixed header */
+}
+
+.header {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 12px;
+  z-index: 2000;
+  background: transparent;
+  padding: 6px 12px;
 }
-.app {
-  width: 100%;
-  max-width: 540px;
-  padding: 32px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.02),
-    rgba(255, 255, 255, 0.01)
-  );
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.6);
-  text-align: center;
+
+.header h1 {
+  font-size: 1.75rem;
+  color: var(--text);
+  margin: 0;
+  line-height: 1;
+  font-weight: 700;
 }
-h1 {
-  margin: 0 0 20px;
-  font-weight: 600;
+
+.theme-toggle {
+  background: var(--card);
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 2px 8px var(--shadow);
+  transition: all 0.2s ease;
+  padding: 0;
+  outline: none;
 }
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
 .clock {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  max-width: 90vw;
+  padding: 20px;
 }
+
 .time {
   font-family: monospace;
-  font-size: 48px;
+  /* Make the clock text occupy ~80% of the viewport width */
+  width: 80vw;
+  max-width: 95vw;
+  text-align: center;
+  /* Estimate 6 characters (HH:MM:SS) when sizing: divide available width by 6 */
+  font-size: clamp(3rem, calc(80vw / 6), 20rem);
+  line-height: 1;
   background: var(--card);
-  padding: 20px 28px;
-  border-radius: 10px;
+  /* Smaller padding so the big numbers can fit the viewport */
+  padding: clamp(8px, 1.5vw, 32px);
+  border-radius: 20px;
   color: var(--accent);
+  box-shadow: 0 6px 18px var(--shadow);
+  text-shadow: 2px 2px 4px var(--shadow);
+  transition: all 0.2s ease;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .time {
+    padding: 15px 20px;
+  }
+
+  .theme-toggle {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    top: 15px;
+    right: 15px;
+  }
 }
