@@ -6,7 +6,7 @@ How to run
 
 1. Open a shell in this folder:
 
-   cd "C:\Users\NITISHA HOLKAR\code\Mycode\2025\digital-clock"
+   cd digital-clock
 
 2. Install dependencies:
 
